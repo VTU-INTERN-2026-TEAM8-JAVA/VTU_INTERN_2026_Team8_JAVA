@@ -1,65 +1,120 @@
-import Image from "next/image";
+import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    redirect("/dashboard");
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(21,128,61,0.2),_transparent_24%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.18),_transparent_28%),linear-gradient(180deg,#fbfffc_0%,#edf8ef_100%)] px-4 py-6 sm:px-6">
+      <div className="mx-auto flex min-h-[calc(100vh-3rem)] max-w-7xl flex-col rounded-[32px] border border-white/70 bg-white/75 p-6 shadow-[0_30px_120px_rgba(15,23,42,0.09)] backdrop-blur md:p-8">
+        <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-700 text-sm font-bold text-white">
+              WW
+            </div>
+            <div>
+              <p className="text-lg font-semibold text-slate-900">WealthWise</p>
+              <p className="text-sm text-slate-500">Mutual fund planning for real goals</p>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <Link
+              href="/login"
+              className="rounded-2xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              Sign in
+            </Link>
+            <Link
+              href="/signup"
+              className="rounded-2xl bg-emerald-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800"
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              Create account
+            </Link>
+          </div>
+        </header>
+
+        <div className="grid flex-1 items-center gap-8 py-10 lg:grid-cols-[1.15fr,0.85fr]">
+          <section>
+            <p className="text-sm font-medium uppercase tracking-[0.28em] text-emerald-700">
+              Portfolio operating system
+            </p>
+            <h1 className="mt-5 max-w-3xl text-5xl font-semibold leading-tight text-slate-900 sm:text-6xl">
+              Track investments, tie them to goals, and see what to do next.
+            </h1>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
+              WealthWise brings portfolio summaries, goal planning, analytics, and
+              alerts into one clean workflow for mutual fund investors.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-4">
+              <FeaturePill label="Portfolio dashboard" />
+              <FeaturePill label="Goal planning" />
+              <FeaturePill label="Analytics snapshots" />
+              <FeaturePill label="Actionable alerts" />
+            </div>
+          </section>
+
+          <section className="grid gap-4">
+            <HeroCard
+              eyebrow="Today"
+              title="Current value"
+              value="Rs 12.8L"
+              accent="from-emerald-500 to-emerald-700"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <HeroCard
+                eyebrow="Goals on track"
+                title="Retirement corpus"
+                value="28%"
+                accent="from-rose-500 to-amber-500"
+              />
+              <HeroCard
+                eyebrow="Monthly SIP"
+                title="Planned outflow"
+                value="Rs 13K"
+                accent="from-sky-500 to-indigo-600"
+              />
+            </div>
+          </section>
         </div>
-      </main>
+      </div>
+    </main>
+  );
+}
+
+function FeaturePill({ label }: { label: string }) {
+  return (
+    <span className="rounded-full border border-emerald-100 bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-800">
+      {label}
+    </span>
+  );
+}
+
+function HeroCard({
+  eyebrow,
+  title,
+  value,
+  accent,
+}: {
+  eyebrow: string;
+  title: string;
+  value: string;
+  accent: string;
+}) {
+  return (
+    <div className="rounded-[28px] bg-slate-900 p-6 text-white shadow-[0_24px_80px_rgba(15,23,42,0.18)]">
+      <div className={`h-1.5 w-24 rounded-full bg-gradient-to-r ${accent}`} />
+      <p className="mt-5 text-sm text-slate-400">{eyebrow}</p>
+      <h2 className="mt-2 text-xl font-medium">{title}</h2>
+      <p className="mt-6 text-4xl font-semibold">{value}</p>
     </div>
   );
 }
