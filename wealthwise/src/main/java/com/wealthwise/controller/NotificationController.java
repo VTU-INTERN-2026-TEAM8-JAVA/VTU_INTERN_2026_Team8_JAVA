@@ -41,4 +41,12 @@ public class NotificationController {
 
         return service.getUnreadCount(userId);
     }
+
+    @GetMapping("/priority/{userId}/{priority}")
+    public List<Notification> getByPriority(
+            @PathVariable Long userId,
+            @PathVariable String priority) {
+
+        return service.getNotificationsByPriority(userId, priority);
+    }
 }

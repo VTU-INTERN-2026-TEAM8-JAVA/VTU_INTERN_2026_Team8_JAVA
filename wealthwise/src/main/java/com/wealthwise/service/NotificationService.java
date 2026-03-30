@@ -36,4 +36,15 @@ public class NotificationService {
 
         return repository.save(notification);
     }
+
+    public List<Notification> getNotificationsByPriority(
+            Long userId,
+            String priority
+    ) {
+
+        return repository.findByUserIdAndPriority(
+                userId,
+                priority
+        );
+    }
 }

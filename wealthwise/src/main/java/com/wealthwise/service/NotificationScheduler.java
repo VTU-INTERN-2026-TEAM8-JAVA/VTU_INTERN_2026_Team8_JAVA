@@ -19,7 +19,12 @@ public class NotificationScheduler {
         this.preferenceService = preferenceService;
     }
 
-    @Scheduled(cron = "0 0 8 * * ?")
+    @Scheduled(fixedRate = 60000)
+    public void sendNotifications() {
+        System.out.println("Notification scheduler triggered");
+
+        generateDailyNotification();
+    }
     public void generateDailyNotification() {
 
         Long userId = 1L;

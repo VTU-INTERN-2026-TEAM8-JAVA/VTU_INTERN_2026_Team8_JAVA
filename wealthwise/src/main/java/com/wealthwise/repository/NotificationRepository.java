@@ -11,5 +11,9 @@ public interface NotificationRepository
     List<Notification> findByUserId(Long userId);
 
     long countByUserIdAndIsReadFalse(Long userId);
+
+    List<Notification> findByUserIdAndPriority(
+            Long userId,
+            String priority
+    );
 }
-        
