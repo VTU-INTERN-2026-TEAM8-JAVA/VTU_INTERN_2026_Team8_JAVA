@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>WealthWise Login</title>
+</head>
+
+<body>
+
+<h2>WealthWise Login</h2>
+
+<label>Email:</label>
+<input type="text" id="email"><br><br>
+
+<label>Password:</label>
+<input type="password" id="password"><br><br>
+
+<button onclick="login()">Login</button>
+
+<br><br>
+
+<h3 id="result"></h3>
+
+<script>
+
+function login(){
+
+    const user = {
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value
+    };
+
+    fetch("http://localhost:8081/auth/signin",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify(user)
+    })
+    .then(response => response.text())
+    .then(data => {
+
+        alert(data);
+document.getElementById("result").innerText = data;
+    });
+
+}
+
+</script>
+
+</body>
+</html>
