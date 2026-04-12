@@ -13,8 +13,8 @@ public class NotificationScheduler {
         this.notificationService = notificationService;
     }
 
-    // AUTH MODULE SIMULATION
-    @Scheduled(fixedRate = 180000)
+    // AUTH MODULE DAILY REMINDER (8 AM)
+    @Scheduled(cron = "0 0 8 * * ?")
     public void welcomeNotificationDemo() {
 
         notificationService.createNotification(
@@ -28,8 +28,9 @@ public class NotificationScheduler {
 
     }
 
-    // INVESTMENT MODULE SIMULATION
-    @Scheduled(fixedRate = 120000)
+
+    // SIP MODULE DAILY REMINDER (8 AM)
+    @Scheduled(cron = "0 0 8 * * ?")
     public void sipReminderNotificationDemo() {
 
         notificationService.createNotification(
