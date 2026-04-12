@@ -8,8 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class WealthwiseApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(WealthwiseApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(WealthwiseApplication.class, args);
+    }
 }

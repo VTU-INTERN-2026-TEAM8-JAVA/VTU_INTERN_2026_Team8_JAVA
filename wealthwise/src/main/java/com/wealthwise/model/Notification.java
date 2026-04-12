@@ -11,6 +11,7 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_id")
     private Long userId;
 
     private String message;
@@ -19,11 +20,16 @@ public class Notification {
 
     private String priority;
 
+    @Column(name = "is_read")
     private boolean isRead = false;
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public Notification() {}
+
+    public Notification() {
+    }
+
 
     public Notification(Long userId,
                         String message,
@@ -36,49 +42,61 @@ public class Notification {
         this.priority = priority;
     }
 
+
     public Long getId() {
         return id;
     }
+
 
     public Long getUserId() {
         return userId;
     }
 
+
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
 
     public String getMessage() {
         return message;
     }
 
+
     public void setMessage(String message) {
         this.message = message;
     }
+
 
     public String getType() {
         return type;
     }
 
+
     public void setType(String type) {
         this.type = type;
     }
+
 
     public String getPriority() {
         return priority;
     }
 
+
     public void setPriority(String priority) {
         this.priority = priority;
     }
+
 
     public boolean isRead() {
         return isRead;
     }
 
+
     public void setRead(boolean read) {
         isRead = read;
     }
+
 
     public LocalDateTime getCreatedAt() {
         return createdAt;

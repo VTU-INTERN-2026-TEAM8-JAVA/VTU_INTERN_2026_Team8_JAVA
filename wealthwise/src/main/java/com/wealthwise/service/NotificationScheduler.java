@@ -1,7 +1,6 @@
 package com.wealthwise.service;
 
 import com.wealthwise.model.Notification;
-import com.wealthwise.model.NotificationPreference;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -9,40 +8,38 @@ import org.springframework.stereotype.Component;
 public class NotificationScheduler {
 
     private final NotificationService notificationService;
-    private final NotificationPreferenceService preferenceService;
 
-    public NotificationScheduler(
-            NotificationService notificationService,
-            NotificationPreferenceService preferenceService) {
-
+    public NotificationScheduler(NotificationService notificationService) {
         this.notificationService = notificationService;
-        this.preferenceService = preferenceService;
     }
 
-    @Scheduled(fixedRate = 60000)
-    public void sendNotifications() {
-        System.out.println("Notification scheduler triggered");
+    // AUTH MODULE SIMULATION
+    @Scheduled(fixedRate = 180000)
+    public void welcomeNotificationDemo() {
 
-        generateDailyNotification();
+        notificationService.createNotification(
+                new Notification(
+                        1L,
+                        "Welcome to WealthWise! Your account has been created successfully.",
+                        "SYSTEM_ALERT",
+                        "LOW"
+                )
+        );
+
     }
-    public void generateDailyNotification() {
 
-        Long userId = 1L;
+    // INVESTMENT MODULE SIMULATION
+    @Scheduled(fixedRate = 120000)
+    public void sipReminderNotificationDemo() {
 
-        NotificationPreference preference =
-                preferenceService.getPreferences(userId);
+        notificationService.createNotification(
+                new Notification(
+                        1L,
+                        "Reminder: Your SIP investment is due soon.",
+                        "SIP_REMINDER",
+                        "HIGH"
+                )
+        );
 
-        if (preference != null && preference.isSipEnabled()) {
-
-            Notification notification =
-                    new Notification(
-                            userId,
-                            "SIP reminder: Your SIP is due soon",
-                            "SIP_REMINDER",
-                            "HIGH"
-                    );
-
-            notificationService.createNotification(notification);
-        }
     }
 }

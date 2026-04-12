@@ -1,26 +1,38 @@
 package com.wealthwise.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    @Column(name = "user_id")
+    private Long userId;
 
     private String name;
+
     private String email;
+
     private String password;
 
-    public Long getUser_id() {
-        return user_id;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+
+    public User() {}
+
+
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
+
 
     public String getName() {
         return name;
@@ -30,6 +42,7 @@ public class User {
         this.name = name;
     }
 
+
     public String getEmail() {
         return email;
     }
@@ -38,11 +51,21 @@ public class User {
         this.email = email;
     }
 
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
